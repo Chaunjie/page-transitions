@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷页面切换</title>
+    <meta name="description" content="A Collection of Page Transitions with CSS Animations"/>
+    <meta name="keywords" content="page transition, css animation, website, effect, css3, jquery"/>
+    <meta name="author" content="Chauncey"/>
+    <link rel="stylesheet" type="text/css" href="css/component.css"/>
+    <link rel="stylesheet" type="text/css" href="css/animations.css"/>
+    <script src="http://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', Calibri, Arial, sans-serif;
+            color: #fff;
+            background: #333;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="no-js">
+<div class="pt-triggers" style="display: block;">
+    <button id="iterateEffects" class="pt-touch-button">显示下一页切换</button>
+</div>
+
+<div id="pt-main" class="pt-perspective">
+    <div class="pt-page pt-page-1"><h1><span>A collection of</span>页面切换效果</h1></div>
+    <div class="pt-page pt-page-2"><h1><span>A collection of</span>页面切换效果</h1></div>
+    <div class="pt-page pt-page-3"><h1><span>A collection of</span>页面切换效果</h1></div>
+    <div class="pt-page pt-page-4"><h1><span>A collection of</span>页面切换效果</h1></div>
+    <div class="pt-page pt-page-5"><h1><span>A collection of</span>页面切换效果</h1></div>
+    <div class="pt-page pt-page-6"><h1><span>A collection of</span>页面切换效果</h1></div>
+</div>
+
+<script src="js/transition.js"></script>
+<script>
+    var translate = new transition({
+        $main: $('#pt-main'),
+        $pages: $('#pt-main').children('div.pt-page'),
+        loop: true,
+        callback: function (index) {
+            console.log(index);
+        }
+    });
+
+    var x = 0;
+    $('#iterateEffects').click(function () {
+        if (x < 67) {
+            x++;
+        } else {
+            x = 1;
+        }
+        //var x = Math.ceil(Math.random() * 67);
+        translate.nextPage(x);
+    });
+</script>
+</body>
+</html>
