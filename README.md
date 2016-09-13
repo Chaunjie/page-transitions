@@ -13,7 +13,7 @@ Dependent libraries have these.
  - Css library: 
  
  ```
- <link rel="stylesheet" type="text/css" href="css/animations.css"/>
+    <link rel="stylesheet" type="text/css" href="css/animations.css"/>
  ```
  - Javascript library: 
 
@@ -21,13 +21,19 @@ Dependent libraries have these.
 	<script src="./js/jquery.min.js"></script>
 	<script src="js/transition.js"></script>
 ```
+ - Html: 
+
+```
+	<div class="pt-page pt-page-4"></div>
+	className .pt-page is necessary;
+```
+  
 
 Options:
 
 |Name|Type|Description|Need|
 |:--|:--|:--|:--|
 |$main|Object|The container of transition pages|true|
-|$pages|Object|The list of transition pages|true|
 |loop|Bool|Whether the list list of transition pages can be recycledthe |false|
 |callback|Function|Callback for page changed|false|
 

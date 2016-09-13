@@ -28,8 +28,8 @@
 
     transition.prototype.init = function (option) {
         this.option.$main = option.$main;
-        this.option.$pages = option.$pages;
-        this.option.pagesCount = option.$pages.length;
+        this.option.$pages = option.$main.children('.pt-page');
+        this.option.pagesCount = this.option.$pages.length;
         this.option.current = option.current ? option.current : 0;
         this.option.callback = option.callback ? option.callback : null;
         this.option.loop = option.loop!=undefined ? option.loop : true;
@@ -367,11 +367,20 @@
     transition.prototype.resetPage = function($outpage, $inpage){
         $outpage.attr( 'class', $outpage.data( 'originalClassList' ) );
         $inpage.attr( 'class', $inpage.data( 'originalClassList' ) + ' pt-page-current' );
+
         this.option.callback && this.option.callback(this.option.current);
     };
 
-    transition.prototype.appendAfter = function(){
-
+    transition.prototype.appendAfter = function(html){
+        var pagesCount = this.option.pagesCount,
+            diff = 0;
+        this.option.$main.append(html);
+        this.option.$pages = this.option.$main.children('.pt-page');
+        this.option.pagesCount = this.option.$pages.length;
+        diff = this.option.pagesCount - pagesCount;
+        for(var i = 1; i <= diff; i++){
+            this.option.$pages.eq(this.option.pagesCount - i).data('originalClassList', this.option.$pages.eq(this.option.pagesCount - i).attr('class'));
+        }
     };
 
     function transition(option) {
