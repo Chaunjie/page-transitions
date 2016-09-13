@@ -1,7 +1,17 @@
 /**
  * Created by xudao on 16/9/12.
  */
-(function (window) {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(['exports'], factory);
+    } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+        // Node, CommonJS-like
+        factory(module.exports);
+    } else {
+        factory(root);
+    }
+})(this, function (exports) {
     "use strict";
 
     transition.prototype.option = {
@@ -368,18 +378,6 @@
         this.init(option);
     }
 
-    window.transition = transition;
-})(window);
+    exports.transition = transition;
+});
 
-/*
- * for amd
- * */
-if (typeof(module) !== 'undefined') {
-    module.exports = window.transition;
-}
-else if (typeof define === 'function' && define.amd) {
-    define([], function () {
-        'use strict';
-        return window.transition;
-    });
-}

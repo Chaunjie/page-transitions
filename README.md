@@ -1,6 +1,6 @@
 Website
 ======================
-https://chaunceyxu.github.io/page-transitions/
+https://chaunjie.github.io/page-transitions/
 
 Introduction
 ======================
