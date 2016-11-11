@@ -32,7 +32,7 @@
         this.option.pagesCount = this.option.$pages.length;
         this.option.current = option.current ? option.current : 0;
         this.option.callback = option.callback ? option.callback : null;
-        this.option.loop = option.loop!=undefined ? option.loop : true;
+        this.option.loop = option.loop != undefined ? option.loop : true;
 
         this.option.$pages.each(function () {
             var $page = $(this);
@@ -44,29 +44,9 @@
         this.option.$pages.eq(this.option.current).addClass('pt-page-current');
     };
 
-    transition.prototype.nextPage = function(animation){
-        if( this.option.isAnimating ) {
-            return false;
-        }
-
-        this.option.isAnimating = true;
-
-        var $currPage = this.option.$pages.eq( this.option.current );
-
-        if( this.option.current < this.option.pagesCount - 1 ) {
-            ++this.option.current;
-        }else if(this.option.current >= this.option.pagesCount - 1 && this.option.loop){
-            this.option.current = 0;
-        }else{
-            return false;
-        }
-
-        //console.log(current);
-
-        var $nextPage = this.option.$pages.eq( this.option.current ).addClass( 'pt-page-current' ),
-            outClass = '', inClass = '';
-
-        switch( animation ) {
+    transition.prototype.chooseAnimation = function (animation) {
+        var outClass, inClass;
+        switch (animation) {
 
             case 1:
                 outClass = 'pt-page-moveToLeft';
@@ -339,48 +319,129 @@
 
         }
 
-        var self = this;
-        $currPage.addClass( outClass ).on( 'webkitAnimationEnd', function() {
-            $currPage.off( 'webkitAnimationEnd' );
-            self.option.endCurrPage = true;
-            if( self.option.endNextPage ) {
-                self.onEndAnimation( $currPage, $nextPage );
-            }
-        } );
-
-        $nextPage.addClass( inClass ).on( 'webkitAnimationEnd', function() {
-            $nextPage.off( 'webkitAnimationEnd' );
-            self.option.endNextPage = true;
-            if( self.option.endCurrPage ) {
-                self.onEndAnimation( $currPage, $nextPage );
-            }
-        } );
+        return {'outClass': outClass, 'inClass': inClass};
     };
 
-    transition.prototype.onEndAnimation = function($outpage, $inpage ){
+    transition.prototype.prevPage = function (animation) {
+        if (this.option.isAnimating) {
+            return false;
+        }
+
+        this.option.isAnimating = true;
+
+        var $currPage = this.option.$pages.eq(this.option.current);
+
+        if (this.option.current > 0) {
+            --this.option.current;
+        } else if (this.option.current <= 0 && this.option.loop) {
+            this.option.current = this.option.pagesCount - 1;
+        } else {
+            return false;
+        }
+
+        var self = this;
+        var animateWork = self.chooseAnimation(animation);
+        var $nextPage = this.option.$pages.eq(this.option.current).addClass('pt-page-current'),
+            outClass = animateWork.outClass, inClass = animateWork.inClass;
+
+
+        $currPage.addClass(outClass).on('webkitAnimationEnd', function () {
+            $currPage.off('webkitAnimationEnd');
+            self.option.endCurrPage = true;
+            if (self.option.endNextPage) {
+                self.onEndAnimation($currPage, $nextPage);
+            }
+        });
+
+        $nextPage.addClass(inClass).on('webkitAnimationEnd', function () {
+            $nextPage.off('webkitAnimationEnd');
+            self.option.endNextPage = true;
+            if (self.option.endCurrPage) {
+                self.onEndAnimation($currPage, $nextPage);
+            }
+        });
+    };
+
+    transition.prototype.nextPage = function (animation) {
+        if (this.option.isAnimating) {
+            return false;
+        }
+
+        this.option.isAnimating = true;
+
+        var $currPage = this.option.$pages.eq(this.option.current);
+
+        if (this.option.current < this.option.pagesCount - 1) {
+            ++this.option.current;
+        } else if (this.option.current >= this.option.pagesCount - 1 && this.option.loop) {
+            this.option.current = 0;
+        } else {
+            return false;
+        }
+
+        var self = this;
+        var animateWork = self.chooseAnimation(animation);
+        var $nextPage = this.option.$pages.eq(this.option.current).addClass('pt-page-current'),
+            outClass = animateWork.outClass, inClass = animateWork.inClass;
+
+
+        $currPage.addClass(outClass).on('webkitAnimationEnd', function () {
+            $currPage.off('webkitAnimationEnd');
+            self.option.endCurrPage = true;
+            if (self.option.endNextPage) {
+                self.onEndAnimation($currPage, $nextPage);
+            }
+        });
+
+        $nextPage.addClass(inClass).on('webkitAnimationEnd', function () {
+            $nextPage.off('webkitAnimationEnd');
+            self.option.endNextPage = true;
+            if (self.option.endCurrPage) {
+                self.onEndAnimation($currPage, $nextPage);
+            }
+        });
+    };
+
+    transition.prototype.onEndAnimation = function ($outpage, $inpage) {
         this.option.endCurrPage = false;
         this.option.endNextPage = false;
-        this.resetPage( $outpage, $inpage );
+        this.resetPage($outpage, $inpage);
         this.option.isAnimating = false;
     };
 
-    transition.prototype.resetPage = function($outpage, $inpage){
-        $outpage.attr( 'class', $outpage.data( 'originalClassList' ) );
-        $inpage.attr( 'class', $inpage.data( 'originalClassList' ) + ' pt-page-current' );
+    transition.prototype.resetPage = function ($outpage, $inpage) {
+        $outpage.attr('class', $outpage.data('originalClassList'));
+        $inpage.attr('class', $inpage.data('originalClassList') + ' pt-page-current');
 
         this.option.callback && this.option.callback(this.option.current);
     };
 
-    transition.prototype.appendAfter = function(html){
+    transition.prototype.appendAfter = function (html) {
         var pagesCount = this.option.pagesCount,
             diff = 0;
         this.option.$main.append(html);
         this.option.$pages = this.option.$main.children('.pt-page');
         this.option.pagesCount = this.option.$pages.length;
         diff = this.option.pagesCount - pagesCount;
-        for(var i = 1; i <= diff; i++){
+        for (var i = 1; i <= diff; i++) {
             this.option.$pages.eq(this.option.pagesCount - i).data('originalClassList', this.option.$pages.eq(this.option.pagesCount - i).attr('class'));
         }
+    };
+
+    transition.prototype.appendAfter = function (html) {
+        var pagesCount = this.option.pagesCount,
+            diff = 0;
+        this.option.$main.prepend(html);
+        this.option.$pages = this.option.$main.children('.pt-page');
+        this.option.pagesCount = this.option.$pages.length;
+        diff = this.option.pagesCount - pagesCount;
+        for (var i = 0; i < diff; i++) {
+            this.option.$pages.eq(i).data('originalClassList', this.option.$pages.eq(i).attr('class'));
+        }
+    };
+
+    transition.prototype.destroy = function () {
+
     };
 
     function transition(option) {

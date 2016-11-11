@@ -46,12 +46,6 @@
         loop: true,
         callback: function (index) {
             console.log(index);
-            if(index > 4){
-                var className = 'pt-page-'+Math.ceil(Math.random()*6);
-                var html = '<div class="pt-page '+className+'"><h1><span>Append new page</span>页面切换效果</h1></div>';
-
-                translate.appendAfter(html);
-            }
         }
     });
 
@@ -63,7 +57,7 @@
             x = 1;
         }
         //var x = Math.ceil(Math.random() * 67);
-        translate.nextPage(x);
+        translate.prevPage(x);
     });
 </script>
 </body>
