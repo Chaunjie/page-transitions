@@ -38,16 +38,21 @@ var translate = new transition({
     }
 });
 
-$('.pt-page').on('swipeUp', function () {
+$('.pt-page').on('swipeUp', function (e) {
     //19:20,31:30,40:41,44:45,48:49,53:52,56:57,60:61
-    translate.nextPage(19);
+    translate.nextPage(56);
     setTimeout(function(){
+        //$('.part').hide();
         $(this).find('.part').hide();
     }.bind(this),500);
 
-}).on('swipeDown', function () {
-    translate.prevPage(20);
+}).on('swipeDown', function (e) {
+    translate.prevPage(57);
     setTimeout(function(){
         $(this).find('.part').hide();
     }.bind(this),500);
+});
+
+$(document).on('touchstart', function(e){
+    e.preventDefault();
 });
