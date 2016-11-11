@@ -41,8 +41,13 @@ var translate = new transition({
 $('.pt-page').on('swipeUp', function () {
     //19:20,31:30,40:41,44:45,48:49,53:52,56:57,60:61
     translate.nextPage(19);
-    $(this).find('.part').hide();
+    setTimeout(function(){
+        $(this).find('.part').hide();
+    }.bind(this),500);
+
 }).on('swipeDown', function () {
     translate.prevPage(20);
-    $(this).find('.part').hide();
+    setTimeout(function(){
+        $(this).find('.part').hide();
+    }.bind(this),500);
 });
