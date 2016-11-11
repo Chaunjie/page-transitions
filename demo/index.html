@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷页面切换</title>
+    <meta name="description" content="A Collection of Page Transitions with CSS Animations"/>
+    <meta name="keywords" content="page transition, css animation, website, effect, css3, jquery"/>
+    <meta name="author" content="Chauncey"/>
+    <link rel="stylesheet" type="text/css" href="css/component.css"/>
+    <link rel="stylesheet" type="text/css" href="css/animations.css"/>
+    <link rel="stylesheet" type="text/css" href="css/page-animation.css"/>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', Calibri, Arial, sans-serif;
+            color: #fff;
+            background: #333;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="main-page">
+<span class="music play">
+    <audio id="audio" src="http://mat1.gtimg.com/news/2015/love/FadeAway.mp3" autoplay="autoplay" loop="loop"></audio>
+</span>
+<span class="arrow"></span>
+
+<div id="pt-main" class="pt-perspective">
+    <div class="pt-page pt-page-1">
+        <div class="part part1 fadeIn" data-delay="1000"></div>
+        <div class="part part2 fadeIn"></div>
+    </div>
+    <div class="pt-page pt-page-2">
+        <div class="part part1" data-delay="1300"></div>
+        <div class="part part2"></div>
+        <div class="part part3"></div>
+    </div>
+    <div class="pt-page pt-page-3">
+        <div class="part part1"></div>
+        <div class="part part2"></div>
+    </div>
+    <div class="pt-page pt-page-4">
+        <div class="part part1"></div>
+        <div class="part part2"></div>
+    </div>
+    <div class="pt-page pt-page-5">
+        <div class="part part1"></div>
+        <div class="part part2"></div>
+    </div>
+    <div class="pt-page pt-page-6">
+        <div class="part part1 parallax"></div>
+    </div>
+</div>
+
+<script src="http://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+<script src="js/transition.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

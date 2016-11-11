@@ -42,6 +42,7 @@ Methods:
 |Name|Description|Args|
 |:--|:--|:--|
 |nextPage(x)|Do transition pages method|transition type(int)|
+|prevPage(x)|Do transition pages method|transition type(int)|
 |appendPage(html)|Append pages to main container|append content(string)|
 
 Useage:
